@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!(isset($_SESSION['user']) && $_SESSION['user'] != '')) {
+if (!(isset($_SESSION['user']))) {
 	header ("Location: index.php");
 }
 
@@ -15,8 +15,8 @@ if(isset($_POST['btn-search'])){
   $amount = $_POST["amount"];
   $interestr = $_POST["interestr"];
 
-  $query = "SELECT * FROM offers WHERE amount>='" .$amount."'"
-		          ."AND interestr<='".$interestr."'";
+  $query = "SELECT * FROM offers WHERE amount<='$amount'
+		          AND interestr>='$interestr' AND lendfrom IS NULL";
   $result = $conn->query($query);
   if (!$result) {
   ?>
@@ -24,16 +24,20 @@ if(isset($_POST['btn-search'])){
   <?php
   }
   $search_data = $result;
+  $conn->close();
 }
 
 if(isset($_POST['btn-insert'])){
+    $giveback = 0;
+
   $amount = $_POST["amount"];
   $interestr = $_POST["interestr"];
   $days = $_POST["days"];
   $owner = $_SESSION['user'];
+  $giveback = (100 + $interestr)/100 * $amount;
 
-  $query = "INSERT INTO offers(amount,interestr,days,owner) 
-            VALUES('$amount','$interestr','$days','$owner')";
+  $query = "INSERT INTO offers(amount,interestr,days,owner,giveback) 
+            VALUES('$amount','$interestr','$days','$owner','$giveback')";
   $result = $conn->query($query);
   if (!$result) {
   	?>
@@ -43,6 +47,7 @@ if(isset($_POST['btn-insert'])){
   ?>
     <script>alert('Announce posted');</script>
   	<?php
+    $conn->close();
 }
 
 if(isset($_POST['logout'])){
@@ -158,27 +163,26 @@ if(isset($_POST['submit_table'])){
         </div>
     </section>
 
-    <section>
     	  <?php
     		if($search_data){
+                echo '<div class="container" id="rezultate1">';
                 echo '<form method="post">';
     			echo '<table>';
-    			echo '<tr><th>Select</th><th>Amount in pounds</th><th>Interest rate</th><th>Number of days</th></tr>' ;
+    			echo '<tr><th>Select</th><th>Amount in pounds</th><th>Interest rate(%)</th><th>Number of days</th></tr>' ;
     			while($row = $search_data->fetch_assoc()){
-                echo '<tr>';
-    			echo '<td><input type="radio" name="id" value="'. $row['id']. '"></td>';
-				echo '<td>' . $row["amount"] . '</td>'; 
-				echo '<td>' . $row["interestr"] . '</td>';
-				echo '<td>' . $row['days'] . '</td>';  
-				echo "</tr>";
+                    echo '<tr>';
+        			echo '<td><input type="radio" name="id" value="'. $row['id']. '"></td>';
+    				echo '<td>' . $row["amount"] . '</td>'; 
+    				echo '<td>' . $row["interestr"] . '</td>';
+    				echo '<td>' . $row['days'] . '</td>';  
+    				echo "</tr>";
 				}
-				echo '<table>';
-                echo '<input type="submit" name="submit_table">';
+                echo '<tr><td colspan="4"><input type="submit" value="Send" name="submit_table"></td></tr>';
+				echo '</table>';
                 echo '</form>';
+                echo '</div>';
 			}
-
-	?>
-    </section>
+           ?>
 
     <section id="lend">
         <div class="container">

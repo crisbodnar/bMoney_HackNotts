@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['user'])!="")
+if(isset($_SESSION['user']))
 {
  header("Location: main.php");
 }
@@ -38,14 +38,17 @@ if(isset($_POST['btn-signin']))
 
 <?php
 //Register manage
+
 if(isset($_POST['btn-signup']))
 {
+ $mid = $pubk = $prik = "";
+
  $uname = $_POST['uname'];
  $email = $_POST['email'];
  $upass = sha1($_POST['pass']);
- $merchantid = $_POST['merchantid'];
- $publickey = $_POST['publickey'];
- $privatekey = $_POST['privatekey'];
+ $mid = $_POST['mid'];
+ $pubk = $_POST['pubk'];
+ $prik = $_POST['prik'];
  
  $query = "INSERT INTO users(username,email,password) VALUES('$uname','$email','$upass')";
  $result = $conn->query($query);
@@ -61,22 +64,7 @@ if(isset($_POST['btn-signup']))
         <script>alert('error while registering you...');</script>
         <?php
  }
-
- $query = "INSERT INTO keys(username,merchantid,publickey,privatekey) 
-           VALUES('$uname','$merchantid','$publickey','$privatekey')";
- $result = $conn->query($query);
- if($result)
- {
-  ?>
-        <script>alert('successfully registered merchant ');</script>
-        <?php
- }
- else
- {
-  ?>
-        <script>alert('error while registering merchant id...');</script>
-        <?php
- }
+$conn->close();
 }
 ?>
 
@@ -201,11 +189,11 @@ if(isset($_POST['btn-signup']))
                     </div>
                     <div class="form-group">
                         <label class="centeral" for="public-key">Public key:</label>
-                        <input type="text" name="puk" style = "width: 100%;" class="form-control block" id="public-key">
+                        <input type="text" name="pubk" style = "width: 100%;" class="form-control block" id="public-key">
                     </div>
                     <div class="form-group">
                         <label class="centeral" for="private-key">Private key:</label>
-                        <input type="text" name="prk" style = "width: 100%;" class="form-control block" id="private-key">
+                        <input type="text" name="prik" style = "width: 100%;" class="form-control block" id="private-key">
                     </div>
                     <div class="form-group">
                         <button type="submit" name="btn-signup" class="btn btn-default wow tada">Register</button>

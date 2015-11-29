@@ -14,14 +14,16 @@ include_once './braintree-php-3.7.0/lib/autoload.php';
 if(isset($_SESSION['id'])){
 
 	$username = $_SESSION['user'];
-	$query = "SELECT * FROM keys WHERE username='$username'";
-	$result = $conn->query($query)
-	$row = $result->fetch_assoc();
+	//$query = "SELECT * FROM keys WHERE username='$username'";
+	//$result = $conn->query($query);
+	//$row = $result->fetch_assoc();
+	//get data from db -> then hard coded
+
 
 	Braintree_Configuration::environment('sandbox');
-	Braintree_Configuration::merchantId($row['merchantid']);
-	Braintree_Configuration::publicKey($row['publickey']);
-	Braintree_Configuration::privateKey($row['privatekey']);
+	Braintree_Configuration::merchantId("h47f3rqb3m4xr9q5");
+	Braintree_Configuration::publicKey("5q45x7f9p4rvv5cn");
+	Braintree_Configuration::privateKey("27f09e561c1f154120fa64bb5d884102");
 
 
 	$id = $_SESSION['id'];
@@ -33,16 +35,28 @@ if(isset($_SESSION['id'])){
 	$owner = $row['owner'];
 
 	$nonce = "fake-valid-visa-nonce";
-	$result = Braintree_Transaction::sale([
+	$sale = Braintree_Transaction::sale([
   		'amount' => (float)$amount,
   		'paymentMethodNonce' => $nonce
 	]);
 
+	$conn->close();
+
 ?>
-	<form id="checkout" method="post" action="checkout.php">
-  <div id="payment-form"></div>
-  <input type="submit" name="lend-btn" value="Lend ". $amount . "$">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <!-- page content -->
+	<form id="checkout" method="post" action="./checkout.php">
+  		<div id="payment-form"></div>
+  		<?php echo '<input type="submit" name="lend-btn" value="Lend '. $amount . '$">' ?>
+	</form>
 
 <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
 <script>
@@ -55,6 +69,8 @@ braintree.setup(clientToken, "dropin", {
   container: "payment-form"
 });
 </script>
+  </body>
+</html>
 <?php
 }
 ?>
