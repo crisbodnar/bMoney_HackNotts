@@ -28,7 +28,7 @@ if(isset($_POST['btn-search'])){
 }
 
 if(isset($_POST['btn-insert'])){
-    $giveback = 0;
+  $giveback = 0;
 
   $amount = $_POST["amount"];
   $interestr = $_POST["interestr"];
@@ -45,7 +45,7 @@ if(isset($_POST['btn-insert'])){
   	<?php
   }
   ?>
-    <script>alert('Announce posted');</script>
+    <script>alert("Published!");</script>
   	<?php
     $conn->close();
 }
@@ -154,7 +154,7 @@ if(isset($_POST['submit_table'])){
             <div class="row">
                 
                 <form method="post" class="centeral">
-                    <p>Lend money</p>
+                    <h3>Lend money</h3>
                     <input name="amount" type="text" placeholder="Amount..." required>
                     <input name="interestr" type="text" placeholder="Interest rate..." required>
                     <button name="btn-search" type="submit"><span class="glyphicon glyphicon-search"></span></button>
@@ -188,7 +188,10 @@ if(isset($_POST['submit_table'])){
         <div class="container">
             <div class="row">
                 <form method="post" class="centeral">
-                    <p>Lend</p>
+                    <h3>Ask for money</h3>
+                    <p>By publishing this request you agree with a lot of legal issues and I am too bored to mention them.
+                       Basically, if you don't give back the required amount of money before the deadline a lot of bad
+                       and shitty things will probably happen to you. You have been worned!</p>
                     <input name="amount" type="text" placeholder="Amount..." required>
                     <input name="interestr" type="text" placeholder="Interest rate..." required>
                     <input name="days" type="text" placeholder="Payback time..." required>
