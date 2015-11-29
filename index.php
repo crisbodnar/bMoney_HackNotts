@@ -143,7 +143,7 @@ if(isset($_POST['btn-signup']))
     <section class="bg-primary center" id="login" >
         <table>
             <td>
-            <div class="container" style="float: left; width: 100%;">   
+            <div class="container" style="float: left; width: 100%;; color: #FFFFFF;">   
                 <h2 class="centeral">LOG-IN</h2>
                 <form method="post" role="form" class="centeral">
                     <div class="form-group" style = "width: 100%;">
@@ -161,7 +161,7 @@ if(isset($_POST['btn-signup']))
             </div>
             </td>
             <td>
-            <div class="container" style="float: right; width: 100%;">
+            <div class="container" style="float: right; width: 100%; color: #FFFFFF;">
                 <h2 class="centeral" >Register</h2>
                 <form method="post" role="form" class="centeral">
                     <div class="form-group">
@@ -170,11 +170,23 @@ if(isset($_POST['btn-signup']))
                     </div>
                     <div class="form-group">
                         <label class="centeral" for="email">Email:</label>
-                        <input type="email" name="email" style = "width: 100%;" class="form-control block" id="pwd">
+                        <input type="email" name="email" style = "width: 100%;" class="form-control block" id="email">
                     </div>
                     <div class="form-group">
                         <label class="centeral" for="pwd">Password:</label>
                         <input type="password" name="pass" style = "width: 100%;" class="form-control block" id="pwd">
+                    </div>
+                    <div class="form-group">
+                        <label class="centeral" for="mertiant-id">Mertiant ID:</label>
+                        <input type="text" name="mid" style = "width: 100%;" class="form-control block" id="mertiant-id">
+                    </div>
+                    <div class="form-group">
+                        <label class="centeral" for="public-key">Public key:</label>
+                        <input type="text" name="puk" style = "width: 100%;" class="form-control block" id="public-key">
+                    </div>
+                    <div class="form-group">
+                        <label class="centeral" for="private-key">Private key:</label>
+                        <input type="text" name="prk" style = "width: 100%;" class="form-control block" id="private-key">
                     </div>
                     <div class="form-group">
                         <button type="submit" name="btn-signup" class="btn btn-default wow tada">Register</button>
