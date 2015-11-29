@@ -533,3 +533,23 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: #222;
 }
+
+#rezultate1{
+  width: 100%;
+  display: block;
+}
+
+#rezultate1 form{
+  width: 100%;
+  margin: 0 auto;
+}
+
+#rezultate1 table{
+  margin: 0 auto;
+}
+
+
+#rezultate input[type="submit"]{
+    position: relative;
+    left: 400px;
+}
