@@ -181,7 +181,7 @@ if(isset($_POST['logout'])){
         </div>
     </section>
 
-    <section id = "tabel">
+    <section>
     	  <?php
     		if($search_data){
     			echo '<table>';

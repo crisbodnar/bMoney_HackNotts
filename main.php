@@ -51,6 +51,12 @@ if(isset($_POST['logout'])){
 	header("Location: index.php");
 }
 
+if(isset($_POST['submit_table'])){
+    $selected_radio = $_POST['id'];
+    $_SESSION['id'] = $selected_radio;
+    header('Location: buy.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -119,9 +125,6 @@ if(isset($_POST['logout'])){
                     <li>
                         <a class="page-scroll text-faded" href="#services"><span class="glyphicon glyphicon-wrench"></span></a>
                     </li>
-                    <li>
-                        <form method="post"><button type="submit" class="page-scroll text-faded" name="logout" href="#logout"><span class="gglyphicon glyphicon-log-out"></span></button></form>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -133,38 +136,11 @@ if(isset($_POST['logout'])){
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1>Welcome back!</h1>  
+                <h1>Welcome back!</h1> 
+                <form method="post"><button type="submit" class="page-scroll text-faded " name="logout" href="#logout">LOG OUT</button></form> 
             </div>
         </div>
     </header>
-
-
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <table class="center">
-                    <tr>
-                        <div class="col-lg-8 col-lg-offset-2 text-center">
-                            <h2 class="section-heading">Let's Get In Touch!</h2>
-                            <hr class="primary">
-                        </div>
-                        <td>
-                            <div class="col-lg-4 col-lg-offset-2 text-center" style = "width: 100%;">
-                                <i class="fa fa-phone fa-3x wow bounceIn"></i>
-                                <p>123-456-6789</p>   
-                            </div>
-                        </td>
-                        <td>
-                            <div class="col-lg-4 text-center" style = "width: 100%;">
-                                <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-                                <p><a href="mailto:your-email@your-domain.com">questions@ineedmoney.com</a></p>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </section>
 
 
     <section id="borrow">
@@ -184,16 +160,20 @@ if(isset($_POST['logout'])){
     <section>
     	  <?php
     		if($search_data){
-    			echo '<table class = "CSS_Table_Example">';
-    			echo '<tr><th>Amount in pounds</th><th>Interest rate</th><th>Number of days</th></tr>' ;
+                echo '<form method="post">';
+    			echo '<table>';
+    			echo '<tr><th>Select</th><th>Amount in pounds</th><th>Interest rate</th><th>Number of days</th></tr>' ;
     			while($row = $search_data->fetch_assoc()){
-    			echo '<tr>';
+                echo '<tr>';
+    			echo '<td><input type="radio" name="id" value="'. $row['id']. '"></td>';
 				echo '<td>' . $row["amount"] . '</td>'; 
 				echo '<td>' . $row["interestr"] . '</td>';
-				echo '<td>' . $row['days'] . '</td>'; 
+				echo '<td>' . $row['days'] . '</td>';  
 				echo "</tr>";
 				}
 				echo '<table>';
+                echo '<input type="submit" name="submit_table">';
+                echo '</form>';
 			}
 
 	?>
