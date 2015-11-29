@@ -10,7 +10,6 @@ if (!(isset($_SESSION['user']) && $_SESSION['user'] != '')) {
 // Connect to the database
 include_once 'dbconnect.php';
 
-$username = $password = "";
 
 if(isset($_POST['btn-search'])){
   $amount = $_POST["amount"];

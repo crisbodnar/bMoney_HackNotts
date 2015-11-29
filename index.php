@@ -1,7 +1,64 @@
 <?php
-    session_start();
-    if($_SESSION['user'])
-        header('Location: main.php');
+session_start();
+if(isset($_SESSION['user'])!="")
+{
+ header("Location: main.php");
+}
+include_once 'dbconnect.php';
+?>
+
+
+<?php
+//Log in manage
+if(isset($_POST['btn-signin']))
+{
+ $uname = $_POST['uname'];
+ $upass = sha1($_POST['pass']);
+ 
+ $query = "SELECT * FROM users WHERE username='$uname' AND password='$upass'";
+ $result = $conn->query($query);
+ if($result->num_rows > 0)
+ {
+        $_SESSION['user'] = $uname;
+        header("Location: main.php");
+  ?>
+        <script>alert('successfully logged in ');</script>
+      
+        <?php
+ }
+ else
+ {
+  ?>
+        <script>alert('error while logging you in...');</script>
+        <?php
+ }
+} 
+?>
+
+
+<?php
+//Register manage
+if(isset($_POST['btn-signup']))
+{
+ $uname = $_POST['uname'];
+ $email = $_POST['email'];
+ $upass = sha1($_POST['pass']);
+ 
+ $query = "INSERT INTO users(username,email,password) VALUES('$uname','$email','$upass')";
+ $result = $conn->query($query);
+ if($result)
+ {
+  ?>
+        <script>alert('successfully registered ');</script>
+        <?php
+ }
+ else
+ {
+  ?>
+        <script>alert('error while registering you...');</script>
+        <?php
+ }
+}
 ?>
 
 
@@ -88,17 +145,17 @@
             <td>
             <div class="container" style="float: left; width: 100%;">   
                 <h2 class="centeral">LOG-IN</h2>
-                <form method="post" action="main.php?type=login" role="form" class="centeral">
+                <form method="post" role="form" class="centeral">
                     <div class="form-group" style = "width: 100%;">
                         <label for="usr">Username:</label>
-                        <input name="usernamel" type="text" style = "width: 100%;" class="form-control block" id="usr">
+                        <input name="uname" type="text" style = "width: 100%;" class="form-control block" id="usr">
                     </div>
                     <div class="form-group" style = "width: 100%;">
                         <label class="centeral" for="pwd">Password:</label>
-                        <input name="passwordl" type="password" style = "width: 100%;" class="form-control block" id="pwd">
+                        <input name="pass" type="password" style = "width: 100%;" class="form-control block" id="pwd">
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default wow tada">Log-in/</button>
+                        <button name="btn-signin" type="submit" class="btn btn-default wow tada">Log-in/</button>
                     </div>
                 </form>
             </div>
@@ -106,10 +163,10 @@
             <td>
             <div class="container" style="float: right; width: 100%;">
                 <h2 class="centeral" >Register</h2>
-                <form action="register.php" method="post" role="form" class="centeral">
+                <form method="post" role="form" class="centeral">
                     <div class="form-group">
                         <label class="centeral" for="usr">Username:</label>
-                        <input type="text" name="username" style = "width: 100%;" class="form-control block" id="usr">
+                        <input type="text" name="uname" style = "width: 100%;" class="form-control block" id="usr">
                     </div>
                     <div class="form-group">
                         <label class="centeral" for="email">Email:</label>
@@ -117,52 +174,8 @@
                     </div>
                     <div class="form-group">
                         <label class="centeral" for="pwd">Password:</label>
-                        <input type="password" name="password" style = "width: 100%;" class="form-control block" id="pwd">
+                        <input type="password" name="pass" style = "width: 100%;" class="form-control block" id="pwd">
                     </div>
-                    <div class="form-group">
-                        <label class="centeral" for="rpwd">Date of birth:</label>
-                        <input type="date" style = "width: 100%;" class="form-control block" id="pwd">
-                    </div>
-                    <div class="form-group">
-                        <input type="radio" name="sex" value="male" checked> Male
-                        <input type="radio" name="sex" value="female" checked> Female
-                        <input type="radio" name="sex" value="other" checked> Other
-                    </div>
-
-
-                    <fieldset>
-                        <label class="centeral" for="fname">Card Details:</label>
-                        <ol>
-                            <div>
-                            
-                                <label class="centeral" for="fname">Card Type:</label>
-                                <ol>
-                                    <div>
-                                        <input id="visa" name="cardtype" type="radio" />
-                                        <label for=visa>VISA</label>
-                                        <input id="visa" name="cardtype" type="radio" />
-                                        <label for=visa>MasterCard</label>
-                                        
-                                    </div>
-                                    
-                                </ol>
-                            
-                            </div>
-                            <div>
-                                <label for="cardnumber">Card Number</label>
-                                <input id="cardnumber" name="cardnumber" type="number required" />
-                            </div>
-                            <div>
-                                <label for="secure">Security Code</label>
-                                <input id="secure" name="secure" type="number required" />
-                            </div>
-                            <div>
-                                <label for="namecard">Name on Card</label>
-                                <input id="namecard" name="namecard" type="text" placeholder="Exact nane as on the card required" />
-                            </div>
-                            
-                        </ol>
-                    </fieldset>
                     <div class="form-group">
                         <button type="submit" name="btn-signup" class="btn btn-default wow tada">Register</button>
                     </div>
