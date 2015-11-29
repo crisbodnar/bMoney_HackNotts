@@ -185,7 +185,7 @@ if(isset($_POST['logout'])){
     	  <?php
     		if($search_data){
     			echo '<table>';
-    			echo '<tr><th>Amount in pounds</th><th>Interest rate</th><th>Number of days</th></tr>';
+    			echo '<tr><th>Amount in pounds</th><th>Interest rate</th><th>Number of days</th></tr>' ;
     			while($row = $search_data->fetch_assoc()){
     			echo '<tr>';
 				echo '<td>' . $row["amount"] . '</td>'; 
