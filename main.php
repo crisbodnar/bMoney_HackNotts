@@ -181,6 +181,24 @@ if(isset($_POST['logout'])){
         </div>
     </section>
 
+    <section>
+    	  <?php
+    		if($search_data){
+    			echo '<table>';
+    			echo '<tr><th>Amount in pounds</th><th>Interest rate</th><th>Number of days</th></tr>';
+    			while($row = $search_data->fetch_assoc()){
+    			echo '<tr>';
+				echo '<td>' . $row["amount"] . '</td>'; 
+				echo '<td>' . $row["interestr"] . '</td>';
+				echo '<td>' . $row['days'] . '</td>'; 
+				echo "</tr>";
+				}
+				echo '<table>';
+			}
+
+	?>
+    </section>
+
     <section id="lend">
         <div class="container">
             <div class="row">
@@ -208,16 +226,6 @@ if(isset($_POST['logout'])){
 
     <!-- Custom Theme JavaScript -->
     <script src="js/creative.js"></script>
-
-    <?php
-    if($search_data){
-    	while($row = $search_data->fetch_assoc()){
-		echo '<div class="offer-result">';
-		echo $row["amount"] . ", " . $row["interestr"] . ", " . $row['days']; 
-		echo "</div>";
-		}
-	}
-	?>
 
 </body>
 </html>
