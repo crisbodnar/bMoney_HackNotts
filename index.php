@@ -150,7 +150,7 @@ $conn->close();
     <section class="bg-primary center" id="login" >
         <table>
             <td>
-            <div class="container" style="float: left; width: 100%;; color: #FFFFFF;">   
+            <div class="container chestia1" style="float: left; width: 100%;; color: #FFFFFF;">   
                 <h2 class="centeral">LOG-IN</h2>
                 <form method="post" role="form" class="centeral">
                     <div class="form-group" style = "width: 100%;">
@@ -168,7 +168,7 @@ $conn->close();
             </div>
             </td>
             <td>
-            <div class="container" style="float: right; width: 100%; color: #FFFFFF;">
+            <div class="container chestia2" style="float: right; width: 100%; color: #FFFFFF;">
                 <h2 class="centeral" >Register</h2>
                 <form method="post" role="form" class="centeral">
                     <div class="form-group">
@@ -203,6 +203,7 @@ $conn->close();
             </td>
         </table>
     </section>
+    </div>
 
 
 

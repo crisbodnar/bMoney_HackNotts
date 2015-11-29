@@ -34,7 +34,7 @@ if(isset($_POST['btn-insert'])){
   $interestr = $_POST["interestr"];
   $days = $_POST["days"];
   $owner = $_SESSION['user'];
-  $giveback = (100 + $interestr)/100 * $amount;
+  $giveback = (100 + $interestr) / 100 * $amount;
 
   $query = "INSERT INTO offers(amount,interestr,days,owner,giveback) 
             VALUES('$amount','$interestr','$days','$owner','$giveback')";
@@ -154,7 +154,7 @@ if(isset($_POST['submit_table'])){
             <div class="row">
                 
                 <form method="post" class="centeral">
-                    <p>Borrow</p>
+                    <p>Lend money</p>
                     <input name="amount" type="text" placeholder="Amount..." required>
                     <input name="interestr" type="text" placeholder="Interest rate..." required>
                     <button name="btn-search" type="submit"><span class="glyphicon glyphicon-search"></span></button>
@@ -194,6 +194,27 @@ if(isset($_POST['submit_table'])){
                     <input name="days" type="text" placeholder="Payback time..." required>
                     <button name="btn-insert" type="submit">Create</button>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="mydata">
+        <div class="container">
+            <div class="row datelemele">
+                
+                <form method="post"><button type="submit" class="btn btn-primary btn-xl wow tada page-scroll" name="mydata" href="#mydata">What I have to give back</button></form> 
+                <?php
+                if(isset($_POST['mydata'])){
+                    $uname = $_SESSION['user'];
+                    $query = "SELECT * FROM offers WHERE owner='$uname' AND lendfrom IS NOT NULL";
+                    $result = $conn->query($query);
+
+
+                    while($row = $result->fetch_assoc()){
+                        echo '<p>You have to give back '. $row['amount'] . '$ to ' . $row['lendfrom'] . ' in ' .$row['days'] . ' days</p>';
+                    }
+                }
+                ?>
             </div>
         </div>
     </section>

@@ -553,3 +553,15 @@ body {
     position: relative;
     left: 400px;
 }
+
+
+.datelemele{
+    margin: 0 auto;
+    position: relative;
+    left: 400px;
+}
+
+.chestia1, .chestia2{
+    position: relative !important;
+    left: 450px;
+}
