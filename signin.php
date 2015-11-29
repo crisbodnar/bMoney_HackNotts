@@ -15,7 +15,7 @@ if(isset($_POST['btn-signin']))
  $result = $conn->query($query);
  if($result->num_rows > 0)
  {
- 		$_SESSION['user'] = 1;
+ 		$_SESSION['user'] = $uname;
  		header("Location: main.php");
   ?>
         <script>alert('successfully logged in ');</script>
