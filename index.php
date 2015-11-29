@@ -43,6 +43,9 @@ if(isset($_POST['btn-signup']))
  $uname = $_POST['uname'];
  $email = $_POST['email'];
  $upass = sha1($_POST['pass']);
+ $merchantid = $_POST['merchantid'];
+ $publickey = $_POST['publickey'];
+ $privatekey = $_POST['privatekey'];
  
  $query = "INSERT INTO users(username,email,password) VALUES('$uname','$email','$upass')";
  $result = $conn->query($query);
@@ -56,6 +59,22 @@ if(isset($_POST['btn-signup']))
  {
   ?>
         <script>alert('error while registering you...');</script>
+        <?php
+ }
+
+ $query = "INSERT INTO keys(username,merchantid,publickey,privatekey) 
+           VALUES('$uname','$merchantid','$publickey','$privatekey')";
+ $result = $conn->query($query);
+ if($result)
+ {
+  ?>
+        <script>alert('successfully registered merchant ');</script>
+        <?php
+ }
+ else
+ {
+  ?>
+        <script>alert('error while registering merchant id...');</script>
         <?php
  }
 }
