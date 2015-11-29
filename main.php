@@ -9,7 +9,7 @@ if (!(isset($_SESSION['user']) && $_SESSION['user'] != '')) {
 <?php
 // Connect to the database
 include_once 'dbconnect.php';
-
+global $search_data;
 
 if(isset($_POST['btn-search'])){
   $amount = $_POST["amount"];
@@ -17,12 +17,13 @@ if(isset($_POST['btn-search'])){
 
   $query = "SELECT * FROM offers WHERE amount>='" .$amount."'"
 		          ."AND interestr<='".$interestr."'";
-		$result = $conn->query($query);
-		while($row = $result->fetch_assoc()){
-			echo '<div class="offer-result">';
-			echo $row["amount"] . ", " . $row["interestr"]; 
-			echo "</div>";
-		}
+  $result = $conn->query($query);
+  if (!$result) {
+  ?>
+  <script>alert('Query problem ');</script>
+  <?php
+  }
+  $search_data = $result;
 }
 
 if(isset($_POST['btn-insert'])){
@@ -34,7 +35,22 @@ if(isset($_POST['btn-insert'])){
   $query = "INSERT INTO offers(amount,interestr,days,owner) 
             VALUES('$amount','$interestr','$days','$owner')";
   $result = $conn->query($query);
+  if (!$result) {
+  	?>
+    <script>alert('Query problem ');</script>
+  	<?php
+  }
+  ?>
+    <script>alert('Announce posted');</script>
+  	<?php
 }
+
+if(isset($_POST['logout'])){
+	unset($_SESSION["user"]);
+	session_destroy();
+	header("Location: index.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -104,7 +120,7 @@ if(isset($_POST['btn-insert'])){
                         <a class="page-scroll text-faded" href="#services"><span class="glyphicon glyphicon-wrench"></span></a>
                     </li>
                     <li>
-                        <a class="page-scroll text-faded" href="#logout"><span class="gglyphicon glyphicon-log-out"></span></a>
+                        <form method="post"><button type="submit" class="page-scroll text-faded" name="logout" href="#logout"><span class="gglyphicon glyphicon-log-out"></span></button></form>
                     </li>
                 </ul>
             </div>
@@ -154,33 +170,30 @@ if(isset($_POST['btn-insert'])){
     <section id="borrow">
         <div class="container">
             <div class="row">
-                <table class="center">
-                    <tr>
-                        <div class="col-lg-8 col-lg-offset-2 text-center">
-                            <h2 class="section-heading">Let's Get In Touch!</h2>
-                            <hr class="primary">
-                        </div>
-                        <td>
-                            <form class="centeral">
-                                <p>Borrow</p>
-                                <input type="text" placeholder="Search..." required>
-                                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                            </form>
-                        </td>
-                        <td>
-                            <form class="centeral">
-                                <p>Lend</p>
-                                <input type="text" placeholder="Search..." required>
-                                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
+                
+                <form method="post" class="centeral">
+                    <p>Borrow</p>
+                    <input name="amount" type="text" placeholder="Amount..." required>
+                    <input name="interestr" type="text" placeholder="Interest rate..." required>
+                    <button name="btn-search" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                </form>
             </div>
         </div>
     </section>
 
-    
+    <section id="lend">
+        <div class="container">
+            <div class="row">
+                <form method="post" class="centeral">
+                    <p>Lend</p>
+                    <input name="amount" type="text" placeholder="Amount..." required>
+                    <input name="interestr" type="text" placeholder="Interest rate..." required>
+                    <input name="days" type="text" placeholder="Payback time..." required>
+                    <button name="btn-insert" type="submit">Create</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -196,8 +209,15 @@ if(isset($_POST['btn-insert'])){
     <!-- Custom Theme JavaScript -->
     <script src="js/creative.js"></script>
 
+    <?php
+    if($search_data){
+    	while($row = $search_data->fetch_assoc()){
+		echo '<div class="offer-result">';
+		echo $row["amount"] . ", " . $row["interestr"] . ", " . $row['days']; 
+		echo "</div>";
+		}
+	}
+	?>
+
 </body>
 </html>
-
-
-
