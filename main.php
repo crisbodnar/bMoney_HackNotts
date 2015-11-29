@@ -137,7 +137,8 @@ if(isset($_POST['submit_table'])){
         <div class="header-content">
             <div class="header-content-inner">
                 <h1>Welcome back!</h1> 
-                <form method="post"><button type="submit" class="page-scroll text-faded " name="logout" href="#logout">LOG OUT</button></form> 
+                <hr>
+                <form method="post"><button type="submit" class="btn btn-primary btn-xl wow tada page-scroll" name="logout" href="#logout">LOG OUT</button></form> 
             </div>
         </div>
     </header>
